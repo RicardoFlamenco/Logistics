@@ -8,7 +8,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "products", schema = "logistica")
+@Table(name = "products", schema = "logistics")
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customers", schema = "logistica")
+@Table(name = "customers", schema = "logistics")
 public class Customers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
