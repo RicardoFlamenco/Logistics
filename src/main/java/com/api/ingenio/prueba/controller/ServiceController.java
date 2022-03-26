@@ -36,7 +36,7 @@ public class ServiceController {
 
     @PostMapping("/")
     public ResponseEntity<Service> create(@Valid @RequestBody Service ser){
-        Service s = serviceRepository.save(new Service(ser.getName(), ser.getDescription()));
+        Service s = serviceRepository.save(new Service(ser.getName(), ser.getDescription(),ser.getDiscountRate()));
         return new ResponseEntity<>(s, HttpStatus.CREATED);
     }
 
@@ -55,6 +55,7 @@ public class ServiceController {
 
         service.setName(request.getName());
         service.setDescription(request.getDescription());
+        service.setDiscountRate(request.getDiscountRate());
 
         return new ResponseEntity<>(serviceRepository.save(service), HttpStatus.OK);
     }

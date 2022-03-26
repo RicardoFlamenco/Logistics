@@ -18,9 +18,20 @@ public class Service {
     @Size(max = 100)
     private String description;
 
-    public Service (String name , String description){
-        this.name=name;
-        this.description=description;
+    private Integer discountRate;
+
+    public Integer getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Integer discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public Service(@NotBlank(message = "el campo nombre es requerido") @Size(max = 50) String name, @Size(max = 100) String description, Integer discountRate) {
+        this.name = name;
+        this.description = description;
+        this.discountRate = discountRate;
     }
 
     public Service (){}

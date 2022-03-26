@@ -30,6 +30,9 @@ public class Deliveries {
     @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     private Warehouse warehouseId;
 
+    @Column(name = "subtotal")
+    private BigDecimal subTotal;
+
     @Column(name = "discount")
     private BigDecimal discount;
 
@@ -86,6 +89,14 @@ public class Deliveries {
 
     public BigDecimal getTotal() {
         return this.total;
+    }
+
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
     }
 
     public void setTotal(BigDecimal total) {
