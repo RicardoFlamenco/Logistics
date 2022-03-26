@@ -1,4 +1,3 @@
-DROP SCHEMA IF EXISTS accounting;
 CREATE SCHEMA IF NOT EXISTS logistics;
 
 CREATE TABLE IF NOT EXISTS logistics.users
