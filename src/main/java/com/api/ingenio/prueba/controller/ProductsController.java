@@ -3,8 +3,8 @@ package com.api.ingenio.prueba.controller;
 
 import com.api.ingenio.prueba.execption.ResourceNotFoundException;
 import com.api.ingenio.prueba.model.Products;
-import com.api.ingenio.prueba.model.Service;
 import com.api.ingenio.prueba.repository.ProductRepository;
+import com.api.ingenio.prueba.requestDTO.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +50,7 @@ public class ProductsController {
      * @return ResponseEntity Products detail.
      */
     @PostMapping("/")
-    public ResponseEntity<?> createService(@Valid @RequestBody Products p){
+    public ResponseEntity<Products> createService(@Valid @RequestBody ProductDTO p){
         Products prod = productRepository.save(new Products(p.getName(), p.getDescription(), p.getPrice(), true));
         return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
@@ -76,7 +76,7 @@ public class ProductsController {
      * @return ResponseEntity Product updated detail.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Products> update(@PathVariable("id") Long id, @RequestBody Products request) {
+    public ResponseEntity<Products> update(@PathVariable("id") Long id, @RequestBody ProductDTO request) {
         Products products  = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontro el registro con id = " + id));
 

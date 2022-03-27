@@ -3,6 +3,7 @@ package com.api.ingenio.prueba.controller;
 import com.api.ingenio.prueba.execption.ResourceNotFoundException;
 import com.api.ingenio.prueba.model.Service;
 import com.api.ingenio.prueba.repository.ServiceRepository;
+import com.api.ingenio.prueba.requestDTO.ServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class ServiceController {
      * @return ResponseEntity Service detail.
      */
     @PostMapping("/")
-    public ResponseEntity<Service> create(@Valid @RequestBody Service ser){
+    public ResponseEntity<Service> create(@Valid @RequestBody ServiceDTO ser){
         Service s = serviceRepository.save(new Service(ser.getName(), ser.getDescription(),ser.getDiscountRate()));
         return new ResponseEntity<>(s, HttpStatus.CREATED);
     }
@@ -72,7 +73,7 @@ public class ServiceController {
      * @return ResponseEntity Service updated detail.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Service> update(@PathVariable("id") Integer id, @RequestBody Service request) {
+    public ResponseEntity<Service> update(@PathVariable("id") Integer id, @RequestBody ServiceDTO request) {
         Service service  = serviceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontro el registro con id = " + id));
 

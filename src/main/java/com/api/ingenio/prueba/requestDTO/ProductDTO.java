@@ -1,39 +1,23 @@
-package com.api.ingenio.prueba.model;
+package com.api.ingenio.prueba.requestDTO;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-/** Represents a Product.
+/** Represents a Product for request.
  * @author Ricardo Flamenco
  * @version 1.0
  * @since 1.0
  */
-@Entity
-@Table(name = "products", schema = "logistics")
-public class Products {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+public class ProductDTO implements Serializable {
+
     private Long id;
-
-    @NotBlank(message = "el nombre es requerido")
-    @Column
     private String name;
-
-    @Column
     private String description;
-
-    @PositiveOrZero(message = "el valor del precio debe de ser positivo")
-    @Column
     private BigDecimal price;
-
-    @Column
     private Boolean enabled;
 
-    public Products(){    }
-    public Products(String name, String description, BigDecimal price, Boolean enabled) {
+    public ProductDTO(){    }
+    public ProductDTO(String name, String description, BigDecimal price, Boolean enabled) {
         this.name = name;
         this.description = description;
         this.price = price;

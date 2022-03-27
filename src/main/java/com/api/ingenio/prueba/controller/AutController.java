@@ -36,6 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AutController {
+
+    public static final String NO_ROL = "Rol no encontrado";
+
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -54,7 +57,7 @@ public class AutController {
      * @return ResponseEntity User details.
      */
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -78,7 +81,7 @@ public class AutController {
      * @return ResponseEntity String message.
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -104,22 +107,22 @@ public class AutController {
                 switch (role) {
                     case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                                .orElseThrow(() -> new RuntimeException(NO_ROL));
                         roles.add(adminRole);
                         break;
                     case "mod":
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                                .orElseThrow(() -> new RuntimeException(NO_ROL));
                         roles.add(modRole);
                         break;
                     case "cliente":
                         Role cliente = roleRepository.findByName(ERole.ROLE_CLIENTE)
-                                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                                .orElseThrow(() -> new RuntimeException(NO_ROL));
                         roles.add(cliente);
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                                .orElseThrow(() -> new RuntimeException(NO_ROL));
                         roles.add(userRole);
                 }
             });

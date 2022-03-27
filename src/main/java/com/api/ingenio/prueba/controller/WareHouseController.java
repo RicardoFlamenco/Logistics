@@ -3,6 +3,7 @@ package com.api.ingenio.prueba.controller;
 import com.api.ingenio.prueba.execption.ResourceNotFoundException;
 import com.api.ingenio.prueba.model.Warehouse;
 import com.api.ingenio.prueba.repository.WarehouseRepository;
+import com.api.ingenio.prueba.requestDTO.WarehouseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class WareHouseController {
      * @return ResponseEntity Warehouse detail.
      */
     @PostMapping("/")
-    public ResponseEntity<Warehouse> createWareHouse(@Valid @RequestBody Warehouse request){
+    public ResponseEntity<Warehouse> createWareHouse(@Valid @RequestBody WarehouseDTO request){
         Warehouse s = warehouseRepository.save(new Warehouse(request.getName(), request.getType(),true));
         return new ResponseEntity<>(s, HttpStatus.CREATED);
     }
@@ -73,7 +74,7 @@ public class WareHouseController {
      * @return ResponseEntity Warehouse updated detail.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Warehouse> updateWareHouse(@PathVariable("id") Long id, @RequestBody Warehouse request) {
+    public ResponseEntity<Warehouse> updateWareHouse(@PathVariable("id") Long id, @RequestBody WarehouseDTO request) {
         Warehouse  ware  = warehouseRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontro el registro con id = " + id));
 

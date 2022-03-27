@@ -3,6 +3,7 @@ package com.api.ingenio.prueba.controller;
 import com.api.ingenio.prueba.execption.ResourceNotFoundException;
 import com.api.ingenio.prueba.model.Customers;
 import com.api.ingenio.prueba.repository.CustomerRepository;
+import com.api.ingenio.prueba.requestDTO.CustomerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class CustomerController {
      * @return ResponseEntity Customers detail.
      */
     @PostMapping("/")
-    public ResponseEntity<Customers> createCustomer(@RequestBody Customers cus){
+    public ResponseEntity<Customers> createCustomer(@RequestBody CustomerDTO cus){
         LocalDateTime lt = LocalDateTime.now();
         Customers c = customerRepository.save(new Customers(cus.getName(),cus.getPhone(),cus.getAddress(),cus.getEmail(),lt,cus.getActive()));
         return new ResponseEntity<>(c, HttpStatus.CREATED);
@@ -75,7 +76,7 @@ public class CustomerController {
      * @return ResponseEntity Customer updated detail.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Customers> update(@PathVariable("id") Long id, @RequestBody Customers request) {
+    public ResponseEntity<Customers> update(@PathVariable("id") Long id, @RequestBody CustomerDTO request) {
         Customers customers  = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontro el registro con id = " + id));
 

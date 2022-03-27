@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -23,6 +22,8 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/deliveries")
 public class DeliveriesController {
+
+    public static final String ERROR_MSG_CUSTOMER = "Cliente debe estar Registrado";
 
     @Autowired
     DeliverieRepository deliverieRepository;
@@ -44,10 +45,10 @@ public class DeliveriesController {
      */
     @GetMapping("/allByClient/{id}")
     public ResponseEntity<List<Deliveries>> getAll(@PathVariable("id") Long id) {
-        List<Deliveries> deliveries = new ArrayList<Deliveries>();
-        Customers cus = new Customers();
+        List<Deliveries> deliveries;
+        Customers cus;
         if (id <= 0 )
-            throw  new ResourceNotFoundException("Debe ingresar un cliente existente  " + id);
+            throw  new ResourceNotFoundException(ERROR_MSG_CUSTOMER + id);
         else
             cus = customerRepository.findById(id).
                     orElseThrow(() -> new ResourceNotFoundException("No se encuentra cliente con este identificador = " + id));
@@ -79,9 +80,9 @@ public class DeliveriesController {
             deliveries.setCustomerId(customerRepository.findById(request.getCustomerId()).
                     orElseThrow(() -> new ResourceNotFoundException("No se encuentra cliente con este identificador = " + request.getCustomerId())));
             deliveries.setServiceId(serviceRepository.findById(request.getServiceId()).
-                    orElseThrow(() -> new ResourceNotFoundException("No se servicio configurado = " + request.getServiceId())));
+                    orElseThrow(() -> new ResourceNotFoundException("servicio no configurado = " + request.getServiceId())));
             deliveries.setWarehouseId(warehouseRepository.findById(request.getWarehouseId()).
-                    orElseThrow(() -> new ResourceNotFoundException("No se servicio configurado = " + request.getWarehouseId())));
+                    orElseThrow(() -> new ResourceNotFoundException("servicio no configurado = " + request.getWarehouseId())));
 
             deliveries.setProductId(productRepository.findById(request.getProductId()).
                     orElseThrow(() -> new ResourceNotFoundException("No se encuentra este producto= " + request.getProductId())));
@@ -93,7 +94,7 @@ public class DeliveriesController {
             }
             matcher1 = pattern1.matcher(request.getNumber());
             if(!matcher1.find()){
-                throw new ResourceNotFoundException("Numero de transporte no coincide con el formato");
+                throw new ResourceNotFoundException("Numero de transporte no coincide con el formato requerido");
             }
             deliveries.setTransportNumber(request.getNumber());
             deliveries.setTrackingNumber(generate());
@@ -121,18 +122,18 @@ public class DeliveriesController {
 
         //cliente
         if (d.getCustomerId() <= 0 )
-            throw  new ResourceNotFoundException("Debe ingresar un cliente existente  " + d.getCustomerId());
+            throw  new ResourceNotFoundException(ERROR_MSG_CUSTOMER + d.getCustomerId());
 
         //servicio
         if (d.getServiceId() <= 0 )
-            throw  new ResourceNotFoundException("Debe ingresar un cliente existente  " + d.getCustomerId());
+            throw  new ResourceNotFoundException(ERROR_MSG_CUSTOMER + d.getCustomerId());
 
         // producto
         if (d.getProductId() <= 0 )
-            throw  new ResourceNotFoundException("Debe ingresar un cliente existente  " + d.getCustomerId());
+            throw  new ResourceNotFoundException(ERROR_MSG_CUSTOMER + d.getCustomerId());
         //cantidad
         if (d.getQuantity() <= 0 )
-            throw  new ResourceNotFoundException("la cantidad de producto es requerido " + d.getQuantity());
+            throw  new ResourceNotFoundException(ERROR_MSG_CUSTOMER + d.getQuantity());
 
         //fecha de entrega
         if(d.getDeliverieDate() == null)
