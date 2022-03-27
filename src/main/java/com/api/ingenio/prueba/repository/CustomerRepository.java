@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/** Customer Data acces.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Repository
 public interface CustomerRepository extends JpaRepository<Customers, Long> {
 

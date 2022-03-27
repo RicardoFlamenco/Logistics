@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -46,6 +47,12 @@ public class AutController {
     @Autowired
     JwtUtils jwtUtils;
 
+    /**
+     * Method used to authenticate a user. Returns an access token on success
+     *
+     * @param loginRequest LoginRequest user credentials.
+     * @return ResponseEntity User details.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -63,6 +70,13 @@ public class AutController {
                 userDetails.getEmail(),
                 roles));
     }
+
+    /**
+     * Method used to register a user. Returns a message on success
+     *
+     * @param signUpRequest SignupRequest user details.
+     * @return ResponseEntity String message.
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {

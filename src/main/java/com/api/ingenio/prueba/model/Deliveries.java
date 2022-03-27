@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/** Represents a Delivery.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "deliveries", schema = "logistics")
 public class Deliveries {

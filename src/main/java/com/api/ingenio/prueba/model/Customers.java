@@ -7,6 +7,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
+
+/** Represents a Customer.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "customers", schema = "logistics")
 public class Customers {

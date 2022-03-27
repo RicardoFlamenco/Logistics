@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/** Warehouse Data acces.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 List<Warehouse> findByNameContaining(String name);

@@ -5,6 +5,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/** Represents a Warehouse.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "warehouses", schema = "logistics")
 public class Warehouse {

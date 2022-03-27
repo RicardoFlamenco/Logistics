@@ -6,6 +6,11 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+/** Represents a User.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(	name = "users",schema = "logistics",
         uniqueConstraints = {

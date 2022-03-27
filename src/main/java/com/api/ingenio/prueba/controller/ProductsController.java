@@ -23,6 +23,12 @@ public class ProductsController {
     @Autowired
     ProductRepository productRepository;
 
+    /**
+     * Method used to obtain Products' list. Returns list of Products on success
+     *
+     * @param name String search term.
+     * @return ResponseEntity List Products detail.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<Products>> getAll(@RequestParam(required = false) String name) {
         List<Products> products = new ArrayList<Products>();
@@ -37,12 +43,24 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    /**
+     * Method used to register a new Customer. Returns Customer on success
+     *
+     * @param p Products new product details.
+     * @return ResponseEntity Products detail.
+     */
     @PostMapping("/")
     public ResponseEntity<?> createService(@Valid @RequestBody Products p){
         Products prod = productRepository.save(new Products(p.getName(), p.getDescription(), p.getPrice(), true));
         return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
 
+    /**
+     * Method used to obtain an especific Product. Returns Product on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Products detail.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Products> findById(@PathVariable("id") Long id){
         Products products = productRepository.findById(id)
@@ -51,6 +69,12 @@ public class ProductsController {
 
     }
 
+    /**
+     * Method used to update an especific Product. Returns Product on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Product updated detail.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Products> update(@PathVariable("id") Long id, @RequestBody Products request) {
         Products products  = productRepository.findById(id)
@@ -63,6 +87,12 @@ public class ProductsController {
         return new ResponseEntity<>(productRepository.save(products), HttpStatus.OK);
     }
 
+    /**
+     * Method used to delete an especific Product.
+     *
+     * @param id Long search id.
+     * @return ResponseEntity HttpStatus result code.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
         productRepository.deleteById(id);

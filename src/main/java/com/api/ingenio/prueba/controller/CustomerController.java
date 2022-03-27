@@ -19,6 +19,12 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
+    /**
+     * Method used to register a new Customer. Returns Customer on success
+     *
+     * @param cus Customers new customer details.
+     * @return ResponseEntity Customers detail.
+     */
     @PostMapping("/")
     public ResponseEntity<Customers> createCustomer(@RequestBody Customers cus){
         LocalDateTime lt = LocalDateTime.now();
@@ -27,6 +33,12 @@ public class CustomerController {
     }
 
 
+    /**
+     * Method used to obtain Customers' list. Returns list of Customers on success
+     *
+     * @param name String search term.
+     * @return ResponseEntity List Customers detail.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<Customers>> getAll(@RequestParam(required = false) String name) {
         List<Customers> ser = new ArrayList<Customers>();
@@ -42,6 +54,12 @@ public class CustomerController {
     }
 
 
+    /**
+     * Method used to obtain an especific Customer. Returns Customer on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Customers detail.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Customers> findById(@PathVariable("id") Long id){
         Customers customers = customerRepository.findById(id)
@@ -50,6 +68,12 @@ public class CustomerController {
 
     }
 
+    /**
+     * Method used to update an especific Customer. Returns Customer on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Customer updated detail.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Customers> update(@PathVariable("id") Long id, @RequestBody Customers request) {
         Customers customers  = customerRepository.findById(id)
@@ -63,6 +87,12 @@ public class CustomerController {
         return new ResponseEntity<>(customerRepository.save(customers), HttpStatus.OK);
     }
 
+    /**
+     * Method used to delete an especific Customer.
+     *
+     * @param id Long search id.
+     * @return ResponseEntity HttpStatus result code.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
         Customers customers  = customerRepository.findById(id)

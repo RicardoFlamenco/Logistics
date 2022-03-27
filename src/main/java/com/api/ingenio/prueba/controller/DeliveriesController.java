@@ -36,7 +36,12 @@ public class DeliveriesController {
     WarehouseRepository warehouseRepository;
 
 
-
+    /**
+     * Method used to obtain all deliveries made to a customer.
+     *
+     * @param id Long search client id.
+     * @return ResponseEntity List Deliveries details.
+     */
     @GetMapping("/allByClient/{id}")
     public ResponseEntity<List<Deliveries>> getAll(@PathVariable("id") Long id) {
         List<Deliveries> deliveries = new ArrayList<Deliveries>();
@@ -54,6 +59,12 @@ public class DeliveriesController {
         return new ResponseEntity<>(deliveries, HttpStatus.OK);
     }
 
+    /**
+     * Method used to create a new delivery.
+     *
+     * @param request DeliveryRequest delivery detail.
+     * @return ResponseEntity Deliveries new delivery details.
+     */
     @PostMapping("/")
     public ResponseEntity<Deliveries> createDeliverie(@Valid @RequestBody DeliveryRequest request){
         Deliveries deliveries= new Deliveries();
@@ -89,20 +100,14 @@ public class DeliveriesController {
             deliveries.setDeliverieDate(request.getDeliverieDate());
             deliveries.setEnabled(true);
             deliveries.setQuantity(request.getQuantity());
+            deliveries.setSubTotal(deliveries.getProductId().getPrice().multiply(new BigDecimal(deliveries.getQuantity())));
             if(deliveries.getQuantity()>=10 ){
-                if(deliveries.getServiceId().getId()==1){
-                    deliveries.setDiscount(new BigDecimal("0.05"));
-                }else{
-                    deliveries.setDiscount(new BigDecimal("0.05"));
-                }
-                deliveries.setTotal(deliveries.getProductId().getPrice().multiply(new BigDecimal(deliveries.getQuantity())));
-                deliveries.setTotal(deliveries.getTotal().multiply(deliveries.getDiscount()));
-
+                deliveries.setDiscount(deliveries.getSubTotal().multiply(new BigDecimal(deliveries.getServiceId().getDiscountRate())));
             }else{
-                deliveries.setTotal(deliveries.getProductId().getPrice().multiply(new BigDecimal(deliveries.getQuantity())));
                 deliveries.setDiscount(BigDecimal.ZERO);
-
             }
+
+            deliveries.setTotal(deliveries.getSubTotal().subtract(deliveries.getDiscount()));
             deliveries.setCreated(LocalDateTime.now());
 
             deliverieRepository.save(deliveries);

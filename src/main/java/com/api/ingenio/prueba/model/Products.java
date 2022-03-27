@@ -7,6 +7,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
+/** Represents a Product.
+ * @author Ricardo Flamenco
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "products", schema = "logistics")
 public class Products {

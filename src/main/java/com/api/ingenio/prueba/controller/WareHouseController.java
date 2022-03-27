@@ -19,6 +19,12 @@ public class WareHouseController {
     @Autowired
     WarehouseRepository warehouseRepository;
 
+    /**
+     * Method used to obtain Warehouse list. Returns list of Warehouse on success
+     *
+     * @param name String search term.
+     * @return ResponseEntity List Warehouse detail.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<Warehouse>> getAllWareHouse(@RequestParam(required = false) String name) {
         List<Warehouse> ware = new ArrayList<Warehouse>();
@@ -33,6 +39,12 @@ public class WareHouseController {
         return new ResponseEntity<>(ware, HttpStatus.OK);
     }
 
+    /**
+     * Method used to register a new Warehouse. Returns Warehouse on success
+     *
+     * @param request Warehouse new warehouse details.
+     * @return ResponseEntity Warehouse detail.
+     */
     @PostMapping("/")
     public ResponseEntity<Warehouse> createWareHouse(@Valid @RequestBody Warehouse request){
         Warehouse s = warehouseRepository.save(new Warehouse(request.getName(), request.getType(),true));
@@ -40,6 +52,12 @@ public class WareHouseController {
     }
 
 
+    /**
+     * Method used to obtain an especific Warehouse. Returns Warehouse on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Warehouse detail.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Warehouse> findById(@PathVariable("id") Long id){
         Warehouse warehouse = warehouseRepository.findById(id)
@@ -48,6 +66,12 @@ public class WareHouseController {
 
     }
 
+    /**
+     * Method used to update an especific Warehouse. Returns Warehouse on success
+     *
+     * @param id Long search id.
+     * @return ResponseEntity Warehouse updated detail.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Warehouse> updateWareHouse(@PathVariable("id") Long id, @RequestBody Warehouse request) {
         Warehouse  ware  = warehouseRepository.findById(id)
@@ -61,6 +85,12 @@ public class WareHouseController {
         return new ResponseEntity<>(warehouseRepository.save(ware), HttpStatus.OK);
     }
 
+    /**
+     * Method used to delete an especific Warehouse.
+     *
+     * @param id Long search id.
+     * @return ResponseEntity HttpStatus result code.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteWareHouse(@PathVariable("id") Long id) {
         warehouseRepository.deleteById(id);
